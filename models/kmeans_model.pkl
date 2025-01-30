@@ -1,0 +1,20 @@
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+import joblib
+
+# Load data
+data = pd.read_csv('data/customer_data.csv')
+
+# Preprocessing: Standardize the data
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(data[['Annual Income (k$)', 'Spending Score (1-100)']])
+
+# Fit K-Means model
+kmeans = KMeans(n_clusters=4, random_state=42)  # Example: 4 clusters
+kmeans.fit(scaled_data)
+
+# Save model
+joblib.dump(kmeans, 'models/kmeans_model.pkl')
+
+print("K-Means model saved successfully!")
